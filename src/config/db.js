@@ -21,4 +21,3 @@ const pool = mysql.createPool({
     }
 })();
 
-
