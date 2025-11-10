@@ -1,15 +1,39 @@
 const db = require('../config/db')
 const clienteModel = {
+   // busca todos os clientes cadastrados
   selecionarTodos: () => {
-    return db.query('select * from clientes')
+    const sql = 'SELECT * FROM clientes'
+    return connection.promise().query(sql)
   },
 
-  selecionarPorCpf: (cpf) => {
-    return db.query('select * from clientes where cpfCliente = ?', [cpf])
+  // busca cliente pelo CPF
+  selecionarPorCpf: (cpfCliente) => {
+    const sql = 'SELECT * FROM clientes WHERE cpfCliente = ?'
+    return connection.promise().query(sql, [cpfCliente])
   },
 
-  inserirCliente: (nome, cpf) => {
-    return db.query('insert into clientes (nomeCliente, cpfCliente) values (?, ?)', [nome, cpf])
+  // busca cliente pelo ID
+  selecionarPorId: (idCliente) => {
+    const sql = 'SELECT * FROM clientes WHERE idCliente = ?'
+    return connection.promise().query(sql, [idCliente])
+  },
+
+  // insere novo cliente no banco
+  inserirCliente: (nomeCliente, cpfCliente) => {
+    const sql = 'INSERT INTO clientes (nomeCliente, cpfCliente) VALUES (?, ?)'
+    return connection.promise().query(sql, [nomeCliente, cpfCliente])
+  },
+
+  // atualiza dados de um cliente existente
+  atualizarCliente: (idCliente, nomeCliente, cpfCliente) => {
+    const sql = 'UPDATE clientes SET nomeCliente = ?, cpfCliente = ? WHERE idCliente = ?'
+    return connection.promise().query(sql, [nomeCliente, cpfCliente, idCliente])
+  },
+
+  // exclui um cliente pelo ID
+  deletarCliente: (idCliente) => {
+    const sql = 'DELETE FROM clientes WHERE idCliente = ?'
+    return connection.promise().query(sql, [idCliente])
   }
 }
 
